@@ -37,6 +37,8 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 
 namespace Abp.Study.Web;
 
@@ -48,12 +50,13 @@ namespace Abp.Study.Web;
     typeof(AbpIdentityWebModule),
     typeof(AbpSettingManagementWebModule),
     typeof(AbpAccountWebOpenIddictModule),
-    typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
+    //typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpTenantManagementWebModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
     )]
-public class StudyWebModule : AbpModule
+[DependsOn(typeof(AbpAspNetCoreMvcUiBasicThemeModule))]
+    public class StudyWebModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
@@ -114,7 +117,8 @@ public class StudyWebModule : AbpModule
         Configure<AbpBundlingOptions>(options =>
         {
             options.StyleBundles.Configure(
-                LeptonXLiteThemeBundles.Styles.Global,
+                //LeptonXLiteThemeBundles.Styles.Global,
+                BasicThemeBundles.Styles.Global,
                 bundle =>
                 {
                     bundle.AddFiles("/global-styles.css");
